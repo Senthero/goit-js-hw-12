@@ -1,0 +1,12 @@
+import{S as c,i as l}from"./assets/vendor-8c59ed88.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))o(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const a of t.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&o(a)}).observe(document,{childList:!0,subtree:!0});function s(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function o(e){if(e.ep)return;e.ep=!0;const t=s(e);fetch(e.href,t)}})();const d="https://pixabay.com/api/",f="43896740-362a21d10e9d41ec216c05f15",u=i=>fetch(`${d}?key=${f}&image_type=photo&orientation=horizontal&q=${i}&safesearch=true&per_page=20`).then(r=>{if(r.ok)return r.json();throw new Error(r.status)}),m=new c(".gallery a"),p=(i,r)=>{const s=i.map(o=>`<li class="photo-card">
+              <a class="gallery__item" href="${o.largeImageURL}">
+                <img class="gallery__image" src="${o.webformatURL}" alt="${o.tags}" loading="lazy" />
+              </a>
+              <div class="info">
+                <p class="info-item"><b>Likes</b> ${o.likes}</p>
+                <p class="info-item"><b>Views</b> ${o.views}</p>
+                <p class="info-item"><b>Comments</b> ${o.comments}</p>
+                <p class="info-item"><b>Downloads</b> ${o.downloads}</p>
+              </div>
+            </li>`).join("");r.insertAdjacentHTML("beforeend",s),m.refresh()},n={form:document.querySelector(".search-form"),gallery:document.querySelector(".gallery"),loader:document.querySelector(".loader")};n.form.addEventListener("submit",i=>{i.preventDefault();const r=i.target.elements.search.value.trim();if(r===""){l.error({title:"⨻",message:"Please enter text to find something!",position:"topRight"});return}n.loader.classList.remove("is-hidden"),u(r).then(s=>{if(n.loader.classList.add("is-hidden"),s.hits.length===0){l.error({title:"⨻",message:"Sorry, there are no images your search query!",position:"topRight"});return}n.form.search.value="",n.gallery.innerHTML="",p(s.hits,n.gallery)}).catch(s=>{console.error("Error fetching images:",s),l.error({title:"⨻",message:"An error occurred while fetching images.",position:"topRight"}),n.loader.classList.add("is-hidden")})});
+//# sourceMappingURL=commonHelpers.js.map
